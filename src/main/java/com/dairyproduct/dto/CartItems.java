@@ -18,6 +18,10 @@ public class CartItems {
 		this.subtotal = subtotal;
 	}
 
+	public CartItems() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getCartItemsId() {
 		return cartItemsId;
 	}

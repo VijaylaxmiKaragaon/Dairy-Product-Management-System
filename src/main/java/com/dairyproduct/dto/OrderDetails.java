@@ -19,6 +19,10 @@ public class OrderDetails {
 		this.subtotal = subtotal;
 	}
 
+	public OrderDetails() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getOrderDetailId() {
 		return orderDetailId;
 	}

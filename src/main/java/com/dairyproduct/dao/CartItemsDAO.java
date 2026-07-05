@@ -6,11 +6,11 @@ import com.dairyproduct.dto.CartItems;
 
 public interface CartItemsDAO {
 
-    boolean addCartItem(CartItems item);
+    void addCartItem(CartItems item);
 
-    boolean updateCartItem(CartItems item);
+    void updateCartItem(CartItems item);
 
-    boolean removeCartItem(int cartItemId);
+    void removeCartItem(int cartItemId);
 
     List<CartItems> getCartItems(int cartId);
 

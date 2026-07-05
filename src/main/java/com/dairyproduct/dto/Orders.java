@@ -21,6 +21,10 @@ public class Orders {
 		this.deliveryAddress = deliveryAddress;
 	 }
 
+	 public Orders() {
+		// TODO Auto-generated constructor stub
+	}
+
 	 public int getOrderId() {
 		 return orderId;
 	 }

@@ -14,6 +14,10 @@ public class Stock {
 		this.lastUpdated = lastUpdated;
 	}
 
+	public Stock() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getStockId() {
 		return stockId;
 	}
