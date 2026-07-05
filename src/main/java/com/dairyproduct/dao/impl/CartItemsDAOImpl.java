@@ -59,7 +59,7 @@ public class CartItemsDAOImpl implements CartItemsDAO {
 			e.printStackTrace();
 		}
 	}
-
+	
 	@Override
 	public List<CartItems> getCartItems(int cartId) {
 		List<CartItems> list = new ArrayList<>();
