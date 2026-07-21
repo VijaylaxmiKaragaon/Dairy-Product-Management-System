@@ -52,5 +52,6 @@ public class AddProductServlet extends HttpServlet {
         dao.addProduct(product);
 
         resp.sendRedirect("viewProducts");
+        
     }
 }

@@ -1,103 +1,29 @@
-<%@ page language="java"
-contentType="text/html;charset=UTF-8"
-pageEncoding="UTF-8"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
 <meta charset="UTF-8">
-
-<title>Home</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-rel="stylesheet">
-
+<title>Home Page</title>
 </head>
-
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<h1>Welcome to Dairy Product Management System</h1>
 
-<div class="container">
+<hr>
 
-<a class="navbar-brand"
-href="#">
+<h3>Customer Menu</h3>
 
-🥛 Dairy Store
+<a href="viewProducts">View Products</a>
+<br><br>
 
-</a>
+<a href="cart.jsp">My Cart</a>
+<br><br>
 
-<ul class="navbar-nav ms-auto">
+<a href="orders.jsp">My Orders</a>
+<br><br>
 
-<li class="nav-item">
-
-<a class="nav-link"
-href="viewProducts">
-
-Products
-
-</a>
-
-</li>
-
-<li class="nav-item">
-
-<a class="nav-link"
-href="viewCart">
-
-Cart
-
-</a>
-
-</li>
-
-<li class="nav-item">
-
-<a class="nav-link"
-href="viewOrders">
-
-Orders
-
-</a>
-
-</li>
-
-<li class="nav-item">
-
-<a class="nav-link"
-href="logout">
-
-Logout
-
-</a>
-
-</li>
-
-</ul>
-
-</div>
-
-</nav>
-
-<div class="container mt-5">
-
-<h2>
-
-Welcome to Dairy Product Management System
-
-</h2>
-
-<p>
-
-Choose fresh dairy products online.
-
-</p>
-
-</div>
+<a href="login.jsp">Logout</a>
 
 </body>
-
 </html>
