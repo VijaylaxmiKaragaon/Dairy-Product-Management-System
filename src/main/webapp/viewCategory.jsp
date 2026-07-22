@@ -7,116 +7,256 @@ List<Category> list =
 %>
 
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
 <meta charset="UTF-8">
-
 <title>View Categories</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+	background:#f5f7fa;
+	font-family:'Segoe UI',sans-serif;
+}
+
+.navbar{
+	background:linear-gradient(135deg,#1565C0,#42A5F5);
+}
+
+.header{
+	background:linear-gradient(135deg,#7B1FA2,#AB47BC);
+	color:white;
+	text-align:center;
+	padding:50px;
+}
+
+.header h1{
+	font-weight:bold;
+}
+
+.category-card{
+	border:none;
+	border-radius:20px;
+	box-shadow:0 10px 25px rgba(0,0,0,.1);
+	overflow:hidden;
+}
+
+.table th{
+	background:#1565C0;
+	color:white;
+	text-align:center;
+}
+
+.table td{
+	vertical-align:middle;
+	text-align:center;
+}
+
+.btn-update{
+	background:#FFC107;
+	border:none;
+	color:black;
+	font-weight:bold;
+}
+
+.btn-update:hover{
+	background:#FFB300;
+}
+
+.btn-delete{
+	background:#dc3545;
+	border:none;
+	font-weight:bold;
+}
+
+.btn-add{
+	background:#28a745;
+	color:white;
+	font-weight:bold;
+	padding:10px 20px;
+	border-radius:10px;
+	text-decoration:none;
+}
+
+.btn-add:hover{
+	background:#218838;
+	color:white;
+}
+
+.footer{
+	background:#1565C0;
+	color:white;
+	text-align:center;
+	padding:15px;
+	margin-top:50px;
+}
+
+</style>
 
 </head>
 
 <body>
 
+<!-- Navbar -->
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+
+	<div class="container">
+
+		<a class="navbar-brand fw-bold">
+			🥛 DairyMart Admin
+		</a>
+
+	</div>
+
+</nav>
+
+<!-- Header -->
+
+<div class="header">
+
+	<h1>📂 Category Management</h1>
+
+	<p>
+		View, Update and Delete Product Categories
+	</p>
+
+</div>
+
+<!-- Category Table -->
+
 <div class="container mt-5">
 
-<h2 class="text-center">
+	<div class="card category-card">
 
-Category List
+		<div class="card-body">
 
-</h2>
+			<h3 class="text-center mb-4">
+				Category List
+			</h3>
 
-<table class="table table-bordered table-hover">
+			<table class="table table-hover table-bordered">
 
-<thead class="table-dark">
+				<thead>
 
-<tr>
+					<tr>
 
-<th>ID</th>
+						<th>ID</th>
+						<th>Category Name</th>
+						<th>Description</th>
+						<th>Update</th>
+						<th>Delete</th>
 
-<th>Name</th>
+					</tr>
 
-<th>Description</th>
+				</thead>
 
-<th>Update</th>
+				<tbody>
 
-<th>Delete</th>
+				<%
+				if(list!=null && !list.isEmpty()){
 
-</tr>
+					for(Category c:list){
+				%>
 
-</thead>
+					<tr>
 
-<tbody>
+						<td>
+							<%=c.getCategoryId()%>
+						</td>
 
-<%
+						<td>
+							<%=c.getCategoryName()%>
+						</td>
 
-if(list!=null){
+						<td>
+							<%=c.getDescription()%>
+						</td>
 
-for(Category c:list){
+						<td>
 
-%>
+							<a href="updateCategory?categoryId=<%=c.getCategoryId()%>"
+							   class="btn btn-update btn-sm">
 
-<tr>
+								✏️ Update
 
-<td><%=c.getCategoryId()%></td>
+							</a>
 
-<td><%=c.getCategoryName()%></td>
+						</td>
 
-<td><%=c.getDescription()%></td>
+						<td>
 
-<td>
+							<a href="deleteCategory?categoryId=<%=c.getCategoryId()%>"
+							   class="btn btn-delete btn-sm"
+							   onclick="return confirm('Are you sure you want to delete this category?')">
 
-<a href="updateCategory.jsp?id=<%=c.getCategoryId()%>"
+								🗑 Delete
 
-class="btn btn-warning">
+							</a>
 
-Update
+						</td>
 
-</a>
+					</tr>
 
-</td>
+				<%
+					}
+				}
+				else{
+				%>
 
-<td>
+					<tr>
 
-<a href="deleteCategory?categoryId=<%=c.getCategoryId()%>"
+						<td colspan="5" class="text-center text-danger">
 
-class="btn btn-danger">
+							No Categories Available
 
-Delete
+						</td>
 
-</a>
+					</tr>
 
-</td>
+				<%
+				}
+				%>
 
-</tr>
+				</tbody>
 
-<%
+			</table>
 
-}
+			<div class="text-center mt-4">
 
-}
+				<a href="addCategory.jsp"
+				   class="btn-add">
 
-%>
+					➕ Add New Category
 
-</tbody>
+				</a>
 
-</table>
+				<a href="admin.jsp"
+				   class="btn btn-secondary ms-2">
 
-<a href="addCategory.jsp"
+					🏠 Dashboard
 
-class="btn btn-success">
+				</a>
 
-Add Category
+			</div>
 
-</a>
+		</div>
+
+	</div>
+
+</div>
+
+<!-- Footer -->
+
+<div class="footer">
+
+	<h5>
+		© 2026 Dairy Product Management System
+	</h5>
 
 </div>
 
 </body>
-
 </html>

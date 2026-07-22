@@ -2,182 +2,358 @@
 	pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
 <meta charset="UTF-8">
-
 <title>Admin Dashboard</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+	background:#f5f7fa;
+	font-family:'Segoe UI',sans-serif;
+}
+
+.navbar{
+	background:linear-gradient(135deg,#1565C0,#42A5F5);
+}
+
+.hero{
+	background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),
+	url("https://images.unsplash.com/photo-1563636619-e9143da7973");
+	background-size:cover;
+	background-position:center;
+	padding:70px;
+	text-align:center;
+	color:white;
+}
+
+.hero h1{
+	font-size:3rem;
+	font-weight:bold;
+}
+
+.dashboard-card{
+	border:none;
+	border-radius:20px;
+	box-shadow:0 8px 20px rgba(0,0,0,.1);
+	transition:.3s;
+}
+
+.dashboard-card:hover{
+	transform:translateY(-10px);
+}
+
+.card-body{
+	padding:30px;
+}
+
+.icon{
+	font-size:55px;
+	margin-bottom:15px;
+}
+
+.btn-manage{
+	border-radius:10px;
+	font-weight:bold;
+}
+
+.footer{
+	background:#1565C0;
+	color:white;
+	text-align:center;
+	padding:15px;
+	margin-top:50px;
+}
+
+</style>
 
 </head>
-
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<!-- Navbar -->
 
-<div class="container">
+<nav class="navbar navbar-expand-lg navbar-dark">
 
-<a class="navbar-brand">
+	<div class="container">
 
-🥛 Dairy Admin Panel
+		<a class="navbar-brand fw-bold">
+			🥛 Dairy Admin Panel
+		</a>
 
-</a>
-
-</div>
+	</div>
 
 </nav>
 
+<!-- Hero Section -->
+
+<div class="hero">
+
+	<h1>Admin Dashboard</h1>
+
+	<p>
+		Manage Products, Categories, Stock, Orders and Payments
+	</p>
+
+</div>
+
+<!-- Dashboard Cards -->
+
 <div class="container mt-5">
 
-<div class="row">
+	<div class="row g-4">
 
-<div class="col-md-3">
+		<!-- Category -->
 
-<div class="card shadow">
+		<div class="col-md-4">
 
-<div class="card-body text-center">
+			<div class="card dashboard-card">
 
-<h4>Category</h4>
+				<div class="card-body text-center">
 
-<a href="addCategory.jsp"
+					<div class="icon">📂</div>
 
-class="btn btn-primary">
+					<h4>Categories</h4>
 
-Manage
+					<p>Manage dairy categories</p>
 
-</a>
+					<a href="addCategory.jsp"
+						class="btn btn-primary btn-manage">
+
+						Manage
+
+					</a>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<!-- Products -->
+
+		<div class="col-md-4">
+
+			<div class="card dashboard-card">
+
+				<div class="card-body text-center">
+
+					<div class="icon">🥛</div>
+
+					<h4>Products</h4>
+
+					<p>Add and manage products</p>
+
+					<a href="viewProducts"
+						class="btn btn-success btn-manage">
+
+						Manage
+
+					</a>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<!-- Stock -->
+
+		<div class="col-md-4">
+
+			<div class="card dashboard-card">
+
+				<div class="card-body text-center">
+
+					<div class="icon">📦</div>
+
+					<h4>Stock</h4>
+
+					<p>Monitor inventory levels</p>
+
+					<a href="viewStock"
+						class="btn btn-warning btn-manage">
+
+						Manage
+
+					</a>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<!-- Orders -->
+
+		<div class="col-md-4">
+
+			<div class="card dashboard-card">
+
+				<div class="card-body text-center">
+
+					<div class="icon">🛒</div>
+
+					<h4>Orders</h4>
+
+					<p>Track customer orders</p>
+
+					<a href="viewOrders"
+						class="btn btn-danger btn-manage">
+
+						Manage
+
+					</a>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<!-- Payments -->
+
+		<div class="col-md-4">
+
+			<div class="card dashboard-card">
+
+				<div class="card-body text-center">
+
+					<div class="icon">💳</div>
+
+					<h4>Payments</h4>
+
+					<p>View payment transactions</p>
+
+					<a href="viewPayment"
+						class="btn btn-info text-white btn-manage">
+
+						View
+
+					</a>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<!-- Logout -->
+
+		<div class="col-md-4">
+
+			<div class="card dashboard-card">
+
+				<div class="card-body text-center">
+
+					<div class="icon">🚪</div>
+
+					<h4>Logout</h4>
+
+					<p>Securely exit dashboard</p>
+
+					<a href="logout"
+						class="btn btn-secondary btn-manage">
+
+						Logout
+
+					</a>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
 
 </div>
 
-</div>
+<!-- Quick Statistics -->
+
+<div class="container mt-5">
+
+	<div class="row text-center">
+
+		<div class="col-md-3">
+
+			<div class="card shadow-sm">
+
+				<div class="card-body">
+
+					<h3>🥛</h3>
+					<h4>Products</h4>
+					<h2>150+</h2>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="col-md-3">
+
+			<div class="card shadow-sm">
+
+				<div class="card-body">
+
+					<h3>📦</h3>
+					<h4>Stock Items</h4>
+					<h2>500+</h2>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="col-md-3">
+
+			<div class="card shadow-sm">
+
+				<div class="card-body">
+
+					<h3>🛒</h3>
+					<h4>Orders</h4>
+					<h2>100+</h2>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="col-md-3">
+
+			<div class="card shadow-sm">
+
+				<div class="card-body">
+
+					<h3>💰</h3>
+					<h4>Revenue</h4>
+					<h2>₹50K+</h2>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
 
 </div>
 
-<div class="col-md-3">
+<!-- Footer -->
 
-<div class="card shadow">
+<div class="footer">
 
-<div class="card-body text-center">
-
-<h4>Products</h4>
-
-<a href="viewProducts"
-
-class="btn btn-success">
-
-Manage
-
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="col-md-3">
-
-<div class="card shadow">
-
-<div class="card-body text-center">
-
-<h4>Stock</h4>
-
-<a href="viewStock"
-
-class="btn btn-warning">
-
-Manage
-
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="col-md-3">
-
-<div class="card shadow">
-
-<div class="card-body text-center">
-
-<h4>Orders</h4>
-
-<a href="viewOrders"
-
-class="btn btn-danger">
-
-Manage
-
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<br>
-
-<div class="row">
-
-<div class="col-md-3">
-
-<div class="card shadow">
-
-<div class="card-body text-center">
-
-<h4>Payments</h4>
-
-<a href="viewPayment"
-
-class="btn btn-info">
-
-View
-
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="col-md-3">
-
-<div class="card shadow">
-
-<div class="card-body text-center">
-
-<h4>Logout</h4>
-
-<a href="logout"
-
-class="btn btn-secondary">
-
-Logout
-
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
+	<h5>
+		© 2026 Dairy Product Management System | Admin Dashboard
+	</h5>
 
 </div>
 
 </body>
-
 </html>

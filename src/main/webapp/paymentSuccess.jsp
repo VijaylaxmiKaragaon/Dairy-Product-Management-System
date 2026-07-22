@@ -2,58 +2,145 @@
 	pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
 <meta charset="UTF-8">
-
 <title>Payment Successful</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+	min-height:100vh;
+	background:linear-gradient(135deg,#4CAF50,#81C784);
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	font-family:'Segoe UI',sans-serif;
+}
+
+.success-card{
+	background:white;
+	border:none;
+	border-radius:25px;
+	padding:40px;
+	text-align:center;
+	box-shadow:0 15px 35px rgba(0,0,0,.2);
+	max-width:650px;
+	width:100%;
+}
+
+.success-icon{
+	font-size:100px;
+	margin-bottom:20px;
+	animation:bounce 1.5s infinite;
+}
+
+@keyframes bounce{
+	0%,20%,50%,80%,100%{
+		transform:translateY(0);
+	}
+	40%{
+		transform:translateY(-15px);
+	}
+	60%{
+		transform:translateY(-8px);
+	}
+}
+
+.success-title{
+	color:#28a745;
+	font-weight:bold;
+	font-size:40px;
+}
+
+.order-msg{
+	font-size:18px;
+	color:#555;
+	margin-top:15px;
+}
+
+.btn-home{
+	background:#1565C0;
+	color:white;
+	padding:12px 25px;
+	border-radius:12px;
+	font-weight:bold;
+	text-decoration:none;
+}
+
+.btn-home:hover{
+	background:#0D47A1;
+	color:white;
+}
+
+.btn-order{
+	background:#28a745;
+	color:white;
+	padding:12px 25px;
+	border-radius:12px;
+	font-weight:bold;
+	text-decoration:none;
+}
+
+.btn-order:hover{
+	background:#218838;
+	color:white;
+}
+
+.thankyou{
+	margin-top:20px;
+	font-size:17px;
+	color:#666;
+}
+
+</style>
 
 </head>
-
 <body>
 
-<div class="container mt-5">
+<div class="success-card">
 
-<div class="alert alert-success text-center">
+	<div class="success-icon">
+		🎉
+	</div>
 
-<h2>
+	<h1 class="success-title">
+		Payment Successful
+	</h1>
 
-Payment Successful 🎉
+	<p class="order-msg">
+		Your payment has been processed successfully.
+	</p>
 
-</h2>
+	<p class="thankyou">
+		🥛 Thank you for choosing DairyMart.
+		Your order has been placed successfully and
+		will be delivered soon.
+	</p>
 
-<p>
+	<hr>
 
-Thank you for shopping with us.
+	<div class="mt-4">
 
-</p>
+		<a href="home.jsp"
+			class="btn-home">
 
-<a href="home.jsp"
+			🏠 Go To Home
 
-class="btn btn-primary">
+		</a>
 
-Go To Home
+		<a href="viewOrders"
+			class="btn-order ms-2">
 
-</a>
+			📦 View Orders
 
-<a href="viewOrders"
+		</a>
 
-class="btn btn-success">
-
-View Orders
-
-</a>
-
-</div>
+	</div>
 
 </div>
 
 </body>
-
 </html>

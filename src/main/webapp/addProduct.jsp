@@ -2,7 +2,8 @@
 <%@page import="com.dairyproduct.dto.Category"%>
 
 <%
-List<Category> categories=(List<Category>)request.getAttribute("categories");
+List<Category> categories =
+(List<Category>)request.getAttribute("categories");
 %>
 
 <!DOCTYPE html>
@@ -13,153 +14,276 @@ List<Category> categories=(List<Category>)request.getAttribute("categories");
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
+<style>
+
+body{
+    background:linear-gradient(135deg,#1565C0,#42A5F5);
+    min-height:100vh;
+    padding:40px 0;
+}
+
+.card{
+    border:none;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 15px 35px rgba(0,0,0,.2);
+}
+
+.card-header{
+    background:linear-gradient(135deg,#2E7D32,#66BB6A);
+    text-align:center;
+    padding:25px;
+}
+
+.card-header h2{
+    color:white;
+    font-weight:bold;
+    margin:0;
+}
+
+.logo{
+    font-size:50px;
+    margin-bottom:10px;
+}
+
+.card-body{
+    padding:35px;
+}
+
+.form-control,
+.form-select{
+    border-radius:12px;
+    padding:12px;
+}
+
+.form-control:focus,
+.form-select:focus{
+    border-color:#42A5F5;
+    box-shadow:0 0 10px rgba(66,165,245,.4);
+}
+
+.btn-save{
+    background:#28a745;
+    color:white;
+    padding:12px 25px;
+    border:none;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.btn-save:hover{
+    background:#218838;
+}
+
+.btn-home{
+    background:#6c757d;
+    color:white;
+    padding:12px 25px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.btn-home:hover{
+    color:white;
+    background:#5a6268;
+}
+
+</style>
+
 </head>
 <body>
 
-<div class="container mt-5">
+<div class="container">
 
-<div class="row justify-content-center">
+    <div class="row justify-content-center">
 
-<div class="col-md-8">
+        <div class="col-lg-8">
 
-<div class="card shadow">
+            <div class="card">
 
-<div class="card-header bg-success text-white">
+                <div class="card-header">
 
-<h3>Add Product</h3>
+                    <div class="logo">🥛</div>
 
-</div>
+                    <h2>Add Dairy Product</h2>
 
-<div class="card-body">
+                </div>
 
-<form action="addProduct" method="post">
+                <div class="card-body">
 
-<div class="mb-3">
+                    <form action="addProduct" method="post">
 
-<label>Category</label>
+                        <div class="mb-3">
 
-<select name="categoryId" class="form-control">
+                            <label class="form-label fw-bold">
+                                Product Category
+                            </label>
 
-<%
-if(categories!=null){
-for(Category c:categories){
-%>
+                            <select name="categoryId"
+                                    class="form-select">
 
-<option value="<%=c.getCategoryId()%>">
+                                <%
+                                if(categories!=null){
+                                    for(Category c : categories){
+                                %>
 
-<%=c.getCategoryName()%>
+                                <option value="<%=c.getCategoryId()%>">
 
-</option>
+                                    <%=c.getCategoryName()%>
 
-<%
-}
-}
-%>
+                                </option>
 
-</select>
+                                <%
+                                    }
+                                }
+                                %>
 
-</div>
+                            </select>
 
-<div class="mb-3">
+                        </div>
 
-<label>Product Name</label>
+                        <div class="mb-3">
 
-<input type="text"
-name="productName"
-class="form-control">
+                            <label class="form-label fw-bold">
+                                Product Name
+                            </label>
 
-</div>
+                            <input type="text"
+                                   name="productName"
+                                   class="form-control"
+                                   placeholder="Enter Product Name"
+                                   required>
 
-<div class="mb-3">
+                        </div>
 
-<label>Brand</label>
+                        <div class="mb-3">
 
-<input type="text"
-name="brand"
-class="form-control">
+                            <label class="form-label fw-bold">
+                                Brand
+                            </label>
 
-</div>
+                            <input type="text"
+                                   name="brand"
+                                   class="form-control"
+                                   placeholder="Enter Brand Name">
 
-<div class="mb-3">
+                        </div>
 
-<label>Price</label>
+                        <div class="row">
 
-<input type="number"
-step="0.01"
-name="price"
-class="form-control">
+                            <div class="col-md-6 mb-3">
 
-</div>
+                                <label class="form-label fw-bold">
+                                    Price
+                                </label>
 
-<div class="mb-3">
+                                <input type="number"
+                                       step="0.01"
+                                       name="price"
+                                       class="form-control"
+                                       placeholder="₹ Enter Price">
 
-<label>Quantity</label>
+                            </div>
 
-<input type="number"
-name="quantity"
-class="form-control">
+                            <div class="col-md-6 mb-3">
 
-</div>
+                                <label class="form-label fw-bold">
+                                    Quantity
+                                </label>
 
-<div class="mb-3">
+                                <input type="number"
+                                       name="quantity"
+                                       class="form-control"
+                                       placeholder="Enter Quantity">
 
-<label>Manufacture Date</label>
+                            </div>
 
-<input type="date"
-name="manufactureDate"
-class="form-control">
+                        </div>
 
-</div>
+                        <div class="row">
 
-<div class="mb-3">
+                            <div class="col-md-6 mb-3">
 
-<label>Expiry Date</label>
+                                <label class="form-label fw-bold">
+                                    Manufacture Date
+                                </label>
 
-<input type="date"
-name="expiryDate"
-class="form-control">
+                                <input type="date"
+                                       name="manufactureDate"
+                                       class="form-control">
 
-</div>
+                            </div>
 
-<div class="mb-3">
+                            <div class="col-md-6 mb-3">
 
-<label>Description</label>
+                                <label class="form-label fw-bold">
+                                    Expiry Date
+                                </label>
 
-<textarea
-name="description"
-class="form-control">
-</textarea>
+                                <input type="date"
+                                       name="expiryDate"
+                                       class="form-control">
 
-</div>
+                            </div>
 
-<div class="mb-3">
+                        </div>
 
-<label>Image URL</label>
+                        <div class="mb-3">
 
-<input type="text"
-name="image"
-class="form-control">
+                            <label class="form-label fw-bold">
+                                Description
+                            </label>
 
-</div>
+                            <textarea
+                                name="description"
+                                rows="4"
+                                class="form-control"
+                                placeholder="Enter Product Description"></textarea>
 
-<button class="btn btn-success">
+                        </div>
 
-Save Product
+                        <div class="mb-4">
 
-</button>
+                            <label class="form-label fw-bold">
+                                Product Image URL
+                            </label>
 
-</form>
+                            <input type="text"
+                                   name="image"
+                                   class="form-control"
+                                   placeholder="Paste Image URL">
 
-</div>
+                        </div>
 
-</div>
+                        <div class="d-flex justify-content-between">
 
-</div>
+                            <button class="btn-save">
 
-</div>
+                                Save Product
+
+                            </button>
+
+                            <a href="home.jsp"
+                               class="btn-home">
+
+                                Back Home
+
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
 </body>
-
 </html>

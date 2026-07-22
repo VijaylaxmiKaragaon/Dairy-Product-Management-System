@@ -65,25 +65,34 @@ public class OrdersDAOImpl implements OrdersDAO {
 
 	@Override
 	public Orders getOrderById(int orderId) {
-        String query = "SELECT * FROM orders WHERE order_id=?";
-        Orders order = null;
-        try (PreparedStatement ps = con.prepareStatement(query)){
-            ps.setInt(1, orderId);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                order = new Orders();
-                order.setOrderId(rs.getInt("order_id"));
-                order.setCustomerId(rs.getInt("customer_id"));
-                order.setOrderDate(rs.getDate("order_date").toString());
-                order.setTotalAmount(rs.getDouble("total_amount"));
-                order.setPaymentMethod(rs.getString("payment_method"));
-                order.setOrderStatus(rs.getString("order_status"));
-                order.setDeliveryAddress(rs.getString("delivery_address"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+
+	    String query = "SELECT * FROM orders WHERE order_id=?";
+	    Orders order = null;
+
+	    try (PreparedStatement ps = con.prepareStatement(query)) {
+
+	        ps.setInt(1, orderId);
+
+	        ResultSet rs = ps.executeQuery();
+
+	        if (rs.next()) {
+
+	            order = new Orders();
+
+	            order.setOrderId(rs.getInt("order_id"));
+	            order.setCustomerId(rs.getInt("customer_id"));
+	            order.setOrderDate(rs.getDate("order_date").toString());
+	            order.setTotalAmount(rs.getDouble("total_amount"));
+	            order.setPaymentMethod(rs.getString("payment_method"));
+	            order.setOrderStatus(rs.getString("order_status"));
+	            order.setDeliveryAddress(rs.getString("delivery_address"));
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return order;
 	}
 
 	@Override
