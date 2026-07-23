@@ -1,174 +1,392 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
 <title>Add Category</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+
 <style>
 
+*{
+    font-family: 'Segoe UI', sans-serif;
+}
+
+
 body{
-	background: linear-gradient(135deg,#1565C0,#42A5F5);
-	min-height:100vh;
-	display:flex;
-	justify-content:center;
-	align-items:center;
-	font-family:'Segoe UI',sans-serif;
+
+    min-height:100vh;
+
+    background:
+    linear-gradient(
+        135deg,
+        #e3f2fd,
+        #bbdefb
+    );
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
 }
 
-.card{
-	border:none;
-	border-radius:20px;
-	overflow:hidden;
-	box-shadow:0 10px 30px rgba(0,0,0,0.2);
+
+/* Main Card */
+
+.category-card{
+
+    width:450px;
+
+    background:white;
+
+    border-radius:18px;
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,0.15);
+
+    overflow:hidden;
+
 }
 
-.card-header{
-	background:linear-gradient(135deg,#0D47A1,#1976D2);
-	padding:20px;
-	text-align:center;
+
+
+/* Header */
+
+.card-header-custom{
+
+    background:
+    linear-gradient(
+        135deg,
+        #1565c0,
+        #42a5f5
+    );
+
+    padding:30px;
+
+    text-align:center;
+
+    color:white;
+
 }
 
-.card-header h2{
-	margin:0;
-	font-weight:bold;
-	color:white;
+
+.card-header-custom .icon{
+
+    width:75px;
+
+    height:75px;
+
+    background:white;
+
+    color:#1565c0;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:35px;
+
+    margin:auto;
+
+    margin-bottom:15px;
+
 }
 
-.card-body{
-	padding:30px;
-	background:white;
+
+.card-header-custom h2{
+
+    font-size:26px;
+
+    font-weight:700;
+
+    margin:0;
+
 }
+
+
+.card-header-custom p{
+
+    margin-top:8px;
+
+    opacity:.9;
+
+}
+
+
+
+/* Body */
+
+.card-body-custom{
+
+    padding:35px;
+
+}
+
+
+
+.form-label{
+
+    font-weight:600;
+
+    color:#333;
+
+}
+
+
 
 .form-control{
-	border-radius:10px;
-	padding:12px;
+
+    height:48px;
+
+    border-radius:12px;
+
+    border:1px solid #ddd;
+
+    padding-left:15px;
+
 }
+
+
+
+textarea.form-control{
+
+    height:auto;
+
+}
+
+
 
 .form-control:focus{
-	box-shadow:0 0 10px rgba(25,118,210,.4);
-	border-color:#1976D2;
+
+    border-color:#1976d2;
+
+    box-shadow:
+    0 0 0 0.2rem rgba(25,118,210,.15);
+
 }
+
+
+
+
+/* Buttons */
+
 
 .btn-add{
-	background:#28a745;
-	color:white;
-	border:none;
-	padding:10px 25px;
-	border-radius:10px;
-	font-weight:bold;
+
+
+    background:#1565c0;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 28px;
+
+    border-radius:12px;
+
+    font-weight:600;
+
+    transition:.3s;
+
 }
+
+
 
 .btn-add:hover{
-	background:#218838;
+
+    background:#0d47a1;
+
+    transform:translateY(-2px);
+
 }
+
+
 
 .btn-back{
-	background:#6c757d;
-	color:white;
-	border:none;
-	padding:10px 25px;
-	border-radius:10px;
-	font-weight:bold;
-	text-decoration:none;
+
+
+    background:#f1f3f5;
+
+    color:#333;
+
+    padding:12px 28px;
+
+    border-radius:12px;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s;
+
 }
+
+
 
 .btn-back:hover{
-	background:#5a6268;
-	color:white;
+
+    background:#ddd;
+
+    color:#000;
+
 }
 
-.logo{
-	font-size:45px;
-	text-align:center;
-	margin-bottom:10px;
-}
+
+
 
 </style>
 
+
 </head>
+
+
 <body>
 
-<div class="container">
 
-	<div class="row justify-content-center">
+<div class="category-card">
 
-		<div class="col-md-6">
 
-			<div class="card">
+    <!-- Header -->
 
-				<div class="card-header">
+    <div class="card-header-custom">
 
-					<div class="logo">🥛</div>
 
-					<h2>Add Dairy Category</h2>
+        <div class="icon">
 
-				</div>
+            <i class="fa-solid fa-cow"></i>
 
-				<div class="card-body">
+        </div>
 
-					<form action="addCategory" method="post">
 
-						<div class="mb-3">
+        <h2>
+            Add Category
+        </h2>
 
-							<label class="form-label fw-bold">
-								Category Name
-							</label>
 
-							<input type="text"
-								class="form-control"
-								name="categoryName"
-								placeholder="Enter Category Name"
-								required>
+        <p>
+            Create a new dairy product category
+        </p>
 
-						</div>
 
-						<div class="mb-4">
+    </div>
 
-							<label class="form-label fw-bold">
-								Description
-							</label>
 
-							<textarea
-								class="form-control"
-								name="description"
-								rows="4"
-								placeholder="Enter Category Description"></textarea>
 
-						</div>
+    <!-- Form -->
 
-						<div class="d-flex justify-content-between">
+    <div class="card-body-custom">
 
-							<button type="submit"
-								class="btn-add">
 
-								Add Category
+        <form action="addCategory" method="post">
 
-							</button>
 
-							<a href="home.jsp"
-								class="btn-back">
+            <div class="mb-4">
 
-								Back Home
 
-							</a>
+                <label class="form-label">
 
-						</div>
+                    Category Name
 
-					</form>
+                </label>
 
-				</div>
 
-			</div>
+                <input type="text"
 
-		</div>
+                       name="categoryName"
 
-	</div>
+                       class="form-control"
+
+                       placeholder="Example: Milk Products"
+
+                       required>
+
+
+            </div>
+
+
+
+            <div class="mb-4">
+
+
+                <label class="form-label">
+
+                    Description
+
+                </label>
+
+
+                <textarea
+
+                    name="description"
+
+                    class="form-control"
+
+                    rows="4"
+
+                    placeholder="Enter category details">
+
+                </textarea>
+
+
+            </div>
+
+
+
+
+            <div class="d-flex justify-content-between">
+
+
+                <button type="submit"
+
+                        class="btn-add">
+
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    Add Category
+
+
+                </button>
+
+
+
+                <a href="home.jsp"
+
+                   class="btn-back">
+
+
+                    <i class="fa-solid fa-arrow-left"></i>
+
+                    Back
+
+
+                </a>
+
+
+            </div>
+
+
+
+        </form>
+
+
+    </div>
+
 
 </div>
+
+
 
 </body>
 </html>

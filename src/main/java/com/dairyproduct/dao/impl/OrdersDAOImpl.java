@@ -18,40 +18,46 @@ public class OrdersDAOImpl implements OrdersDAO {
     	con = Connector.requestConnection();
     }
     
-	@Override
-	public void placeOrder(Orders order) {
-		String query = "INSERT INTO orders(customer_id, order_date, total_amount, payment_method, order_status, delivery_address) VALUES(?,?,?,?,?,?)";
-        try(PreparedStatement ps = con.prepareStatement(query)){
+    @Override
+    public void placeOrder(Orders order) {
+        String query = "INSERT INTO orders(customer_id, order_date, total_amount, payment_method, order_status, delivery_address) VALUES(?,?,?,?,?,?)";
+
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+
             ps.setInt(1, order.getCustomerId());
-            ps.setString(2, order.getOrderDate());
+            ps.setDate(2, java.sql.Date.valueOf(order.getOrderDate()));
             ps.setDouble(3, order.getTotalAmount());
             ps.setString(4, order.getPaymentMethod());
             ps.setString(5, order.getOrderStatus());
             ps.setString(6, order.getDeliveryAddress());
+
             ps.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-	}
+    }
 
 	@Override
 	public void updateOrder(Orders order) {
-		 String query = "UPDATE orders SET customer_id=?, order_date=?, total_amount=?, payment_method=?, order_status=?, delivery_address=? WHERE order_id=?";
-	        try(PreparedStatement ps = con.prepareStatement(query)){
-	            ps.setInt(1, order.getCustomerId());
-	            ps.setString(2, order.getOrderDate());
-	            ps.setDouble(3, order.getTotalAmount());
-	            ps.setString(4, order.getPaymentMethod());
-	            ps.setString(5, order.getOrderStatus());
-	            ps.setString(6, order.getDeliveryAddress());
-	            ps.setInt(7, order.getOrderId());
-	            ps.executeUpdate();
+	    String query = "UPDATE orders SET customer_id=?, order_date=?, total_amount=?, payment_method=?, order_status=?, delivery_address=? WHERE order_id=?";
 
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
+	    try (PreparedStatement ps = con.prepareStatement(query)) {
+
+	        ps.setInt(1, order.getCustomerId());
+	        ps.setDate(2, java.sql.Date.valueOf(order.getOrderDate()));
+	        ps.setDouble(3, order.getTotalAmount());
+	        ps.setString(4, order.getPaymentMethod());
+	        ps.setString(5, order.getOrderStatus());
+	        ps.setString(6, order.getDeliveryAddress());
+	        ps.setInt(7, order.getOrderId());
+
+	        ps.executeUpdate();
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 	}
-
 	@Override
 	public void deleteOrder(int orderId) {
 		 String query = "DELETE FROM orders WHERE order_id=?";

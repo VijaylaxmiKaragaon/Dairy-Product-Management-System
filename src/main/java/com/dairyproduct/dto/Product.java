@@ -8,7 +8,7 @@ public class Product {
     private String brand;
     private double price;
     private int quantity;
-    private String manufactureDate;
+    private String manufacturedDate;
     private String expiryDate;
     private String description;
     private String image;
@@ -62,12 +62,9 @@ public class Product {
 		this.quantity = quantity;
 	}
 
-	public String getManufactureDate() {
-		return manufactureDate;
-	}
 
-	public void setManufactureDate(String manufactureDate) {
-		this.manufactureDate = manufactureDate;
+	public void setManufacturedDate(String manufacturedDate) {
+		this.manufacturedDate = manufacturedDate;
 	}
 
 	public String getExpiryDate() {
@@ -93,6 +90,12 @@ public class Product {
 	public void setImage(String image) {
 		this.image = image;
 	}
+
+	public String getManufacturedDate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
     
 }

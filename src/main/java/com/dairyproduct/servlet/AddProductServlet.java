@@ -35,7 +35,7 @@ public class AddProductServlet extends HttpServlet {
         product.setQuantity(
                 Integer.parseInt(req.getParameter("quantity")));
 
-        product.setManufactureDate(
+        product.setManufacturedDate(
                 req.getParameter("manufactureDate"));
 
         product.setExpiryDate(
