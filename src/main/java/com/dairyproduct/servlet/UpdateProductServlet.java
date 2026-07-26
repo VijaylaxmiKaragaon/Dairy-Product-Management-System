@@ -31,7 +31,7 @@ public class UpdateProductServlet extends HttpServlet{
                 Double.parseDouble(req.getParameter("price")));
         product.setQuantity(
                 Integer.parseInt(req.getParameter("quantity")));
-        product.setManufactureDate(
+        product.setManufacturedDate(
                 req.getParameter("manufactureDate"));
         product.setExpiryDate(
                 req.getParameter("expiryDate"));

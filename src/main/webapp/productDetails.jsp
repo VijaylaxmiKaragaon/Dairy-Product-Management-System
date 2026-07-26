@@ -177,7 +177,7 @@ body{
 
                     <h6>
                         Manufacture Date :
-                        <%=product.getManufactureDate()%>
+                        <%=product.getManufacturedDate()%>
                     </h6>
 
                     <h6>
