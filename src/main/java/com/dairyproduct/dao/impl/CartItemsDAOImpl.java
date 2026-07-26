@@ -61,7 +61,7 @@ public class CartItemsDAOImpl implements CartItemsDAO {
     public void updateCartItem(CartItems item) {
 
 
-        String sql = "UPDATE cart_items SET quantity=?, price=?, subtotal=? WHERE cart_item_id=?";
+        String sql = "UPDATE cart_items SET quantity=?, price=?, subtotal=? WHERE cart_items_id=?";
 
 
         try(PreparedStatement ps = con.prepareStatement(sql)) {
@@ -90,23 +90,26 @@ public class CartItemsDAOImpl implements CartItemsDAO {
 
 
 
-    // Remove Cart Item
     @Override
     public void removeCartItem(int cartItemId) {
 
 
-        String sql = "DELETE FROM cart_items WHERE cart_item_id=?";
+        String sql =
+        "DELETE FROM cart_items WHERE cart_items_id=?";
 
 
-        try(PreparedStatement ps = con.prepareStatement(sql)) {
+        try(PreparedStatement ps =
+                con.prepareStatement(sql)){
 
 
             ps.setInt(1, cartItemId);
 
+
             ps.executeUpdate();
 
 
-        } catch(SQLException e) {
+        }
+        catch(SQLException e){
 
             e.printStackTrace();
 
@@ -118,7 +121,6 @@ public class CartItemsDAOImpl implements CartItemsDAO {
 
 
 
-    // Get Cart Items By Cart Id
     @Override
     public List<CartItems> getCartItems(int cartId) {
 
@@ -126,76 +128,79 @@ public class CartItemsDAOImpl implements CartItemsDAO {
         List<CartItems> list = new ArrayList<>();
 
 
-        String sql = "SELECT * FROM cart_items WHERE cart_id=?";
+        String sql =
+        "SELECT * FROM cart_items WHERE cart_id=?";
 
 
-        try(PreparedStatement ps = con.prepareStatement(sql)) {
+        try(PreparedStatement ps =
+                con.prepareStatement(sql)){
 
 
             ps.setInt(1, cartId);
 
 
-            try(ResultSet rs = ps.executeQuery()) {
+            ResultSet rs =
+            ps.executeQuery();
 
 
-                while(rs.next()) {
+
+            while(rs.next()){
 
 
-                    CartItems item = new CartItems();
+                CartItems item =
+                new CartItems();
 
 
-                    item.setCartItemsId(
-                        rs.getInt("cart_item_id")
-                    );
+
+                item.setCartItemsId(
+                    rs.getInt("cart_items_id")
+                );
 
 
-                    item.setCartId(
-                        rs.getInt("cart_id")
-                    );
+                item.setCartId(
+                    rs.getInt("cart_id")
+                );
 
 
-                    item.setProductId(
-                        rs.getInt("product_id")
-                    );
+                item.setProductId(
+                    rs.getInt("product_id")
+                );
 
 
-                    item.setQuantity(
-                        rs.getInt("quantity")
-                    );
+                item.setQuantity(
+                    rs.getInt("quantity")
+                );
 
 
-                    item.setPrice(
-                        rs.getDouble("price")
-                    );
+                item.setPrice(
+                    rs.getDouble("price")
+                );
 
 
-                    item.setSubtotal(
-                        rs.getDouble("subtotal")
-                    );
+                item.setSubtotal(
+                    rs.getDouble("subtotal")
+                );
 
 
-                    list.add(item);
+                list.add(item);
 
-                }
 
             }
 
 
-        } catch(SQLException e) {
+
+        }
+        catch(Exception e){
 
             e.printStackTrace();
 
         }
 
 
+
         return list;
 
     }
-
-
-
-
-
     // Calculate Cart Total
     @Override
     public double calculateTotal(int cartId) {
@@ -261,5 +266,90 @@ public class CartItemsDAOImpl implements CartItemsDAO {
         }
 
     }
+
+
+
+    @Override
+    public List<CartItems> getCartItemsByCustomer(int customerId) {
+
+
+        List<CartItems> list = new ArrayList<>();
+
+
+        String sql =
+        "SELECT ci.* FROM cart c " +
+        "JOIN cart_items ci ON c.cart_id = ci.cart_id " +
+        "WHERE c.customer_id=?";
+
+
+
+        try(PreparedStatement ps = con.prepareStatement(sql)) {
+
+
+            ps.setInt(1, customerId);
+
+
+
+            try(ResultSet rs = ps.executeQuery()) {
+
+
+                while(rs.next()) {
+
+
+                    CartItems item = new CartItems();
+
+
+
+                    item.setCartItemsId(
+                        rs.getInt("cart_items_id")
+                    );
+
+
+                    item.setCartId(
+                        rs.getInt("cart_id")
+                    );
+
+
+                    item.setProductId(
+                        rs.getInt("product_id")
+                    );
+
+
+                    item.setQuantity(
+                        rs.getInt("quantity")
+                    );
+
+
+                    item.setPrice(
+                        rs.getDouble("price")
+                    );
+
+
+                    item.setSubtotal(
+                        rs.getDouble("subtotal")
+                    );
+
+
+
+                    list.add(item);
+
+
+                }
+
+            }
+
+
+        } catch(SQLException e) {
+
+            e.printStackTrace();
+
+        }
+
+
+
+        return list;
+
+    }
+    
 
 }

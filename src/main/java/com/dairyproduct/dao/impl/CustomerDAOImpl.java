@@ -11,41 +11,95 @@ import com.dairyproduct.dao.CustomerDAO;
 import com.dairyproduct.dto.Customer;
 import com.dairyproduct.utility.Connector;
 
+
 public class CustomerDAOImpl implements CustomerDAO {
+
 
     private Connection con;
 
+
     public CustomerDAOImpl() {
+
         con = Connector.requestConnection();
+
     }
 
 
 
-    // Register Customer
+    // CUSTOMER REGISTRATION
+
     @Override
     public boolean registerCustomer(Customer customer) {
 
-        String sql = "INSERT INTO customer(name,email,phone,address,password) VALUES(?,?,?,?,?)";
+
+        String role = "CUSTOMER";
 
 
-        try(PreparedStatement ps = con.prepareStatement(sql)) {
+        try {
 
 
-            ps.setString(1, customer.getName());
+            // Check first user as ADMIN
 
-            ps.setString(2, customer.getEmail());
-
-            ps.setString(3, customer.getPhone());
-
-            ps.setString(4, customer.getAddress());
-
-            ps.setString(5, customer.getPassword());
+            String countSql =
+                    "SELECT COUNT(*) FROM customer";
 
 
-            return ps.executeUpdate() > 0;
+            try(PreparedStatement countPs =
+                    con.prepareStatement(countSql);
+                
+                ResultSet rs =
+                    countPs.executeQuery()) {
 
 
-        } catch(SQLException e) {
+                if(rs.next() && rs.getInt(1) == 0) {
+
+                    role = "ADMIN";
+
+                }
+
+            }
+
+
+
+            String sql =
+            "INSERT INTO customer(name,email,phone,address,password,role,status) "
+            + "VALUES(?,?,?,?,?,?,?)";
+
+
+
+            try(PreparedStatement ps =
+                    con.prepareStatement(sql)) {
+
+
+                ps.setString(1, customer.getName());
+
+                ps.setString(2, customer.getEmail());
+
+                ps.setString(3, customer.getPhone());
+
+                ps.setString(4, customer.getAddress());
+
+                ps.setString(5, customer.getPassword());
+
+                ps.setString(6, role);
+
+                ps.setString(7, "ACTIVE");
+
+
+
+                int rows =
+                        ps.executeUpdate();
+
+
+
+                return rows > 0;
+
+
+            }
+
+
+        }
+        catch(Exception e) {
 
             e.printStackTrace();
 
@@ -53,43 +107,90 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 
         return false;
+
     }
 
 
 
 
 
-    // Login Customer
+    // CUSTOMER LOGIN
+
     @Override
     public Customer login(String email, String password) {
 
 
-        String sql = "SELECT * FROM customer WHERE email=? AND password=?";
+        String sql =
+        "SELECT * FROM customer WHERE email=? AND password=?";
 
 
-        try(PreparedStatement ps = con.prepareStatement(sql)) {
+        try(PreparedStatement ps =
+                con.prepareStatement(sql)) {
+
+
+            System.out.println("Entered Email : " + email);
+            System.out.println("Entered Password : " + password);
+
 
 
             ps.setString(1, email);
-
             ps.setString(2, password);
 
 
 
-            try(ResultSet rs = ps.executeQuery()) {
+            ResultSet rs = ps.executeQuery();
 
 
-                if(rs.next()) {
+
+            if(rs.next()) {
 
 
-                    return mapResultSetToCustomer(rs);
+                System.out.println("LOGIN SUCCESS");
 
-                }
+
+
+                Customer customer = new Customer();
+
+
+                customer.setCustomerId(
+                        rs.getInt("customer_id"));
+
+                customer.setName(
+                        rs.getString("name"));
+
+                customer.setEmail(
+                        rs.getString("email"));
+
+                customer.setPhone(
+                        rs.getString("phone"));
+
+                customer.setAddress(
+                        rs.getString("address"));
+
+                customer.setPassword(
+                        rs.getString("password"));
+
+                customer.setRole(
+                        rs.getString("role"));
+
+                customer.setStatus(
+                        rs.getString("status"));
+
+
+
+                return customer;
+
+
+            }
+            else {
+
+                System.out.println("LOGIN FAILED - NO DATA FOUND");
 
             }
 
 
-        } catch(SQLException e) {
+
+        } catch(Exception e) {
 
             e.printStackTrace();
 
@@ -97,22 +198,23 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 
         return null;
-
     }
+    
+    // UPDATE CUSTOMER
 
-
-
-
-
-    // Update Customer
     @Override
     public boolean updateCustomer(Customer customer) {
 
 
-        String sql = "UPDATE customer SET name=?, email=?, phone=?, address=?, password=? WHERE customer_id=?";
+        String sql =
+        "UPDATE customer SET name=?,email=?,phone=?,address=?,password=? "
+        + "WHERE customer_id=?";
 
 
-        try(PreparedStatement ps = con.prepareStatement(sql)) {
+
+        try(PreparedStatement ps =
+                con.prepareStatement(sql)) {
+
 
 
             ps.setString(1, customer.getName());
@@ -128,10 +230,12 @@ public class CustomerDAOImpl implements CustomerDAO {
             ps.setInt(6, customer.getCustomerId());
 
 
+
             return ps.executeUpdate() > 0;
 
 
-        } catch(SQLException e) {
+        }
+        catch(SQLException e) {
 
             e.printStackTrace();
 
@@ -146,24 +250,30 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 
 
-    // Delete Customer
+    // DELETE CUSTOMER
+
     @Override
     public boolean deleteCustomer(int customerId) {
 
 
-        String sql = "DELETE FROM customer WHERE customer_id=?";
+        String sql =
+        "DELETE FROM customer WHERE customer_id=?";
 
 
-        try(PreparedStatement ps = con.prepareStatement(sql)) {
+
+        try(PreparedStatement ps =
+                con.prepareStatement(sql)) {
 
 
             ps.setInt(1, customerId);
 
 
+
             return ps.executeUpdate() > 0;
 
 
-        } catch(SQLException e) {
+        }
+        catch(SQLException e) {
 
             e.printStackTrace();
 
@@ -178,21 +288,27 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 
 
-    // Get Customer By Id
+    // GET CUSTOMER BY ID
+
     @Override
     public Customer getCustomerById(int customerId) {
 
 
-        String sql = "SELECT * FROM customer WHERE customer_id=?";
+        String sql =
+        "SELECT * FROM customer WHERE customer_id=?";
 
 
-        try(PreparedStatement ps = con.prepareStatement(sql)) {
+
+        try(PreparedStatement ps =
+                con.prepareStatement(sql)) {
 
 
             ps.setInt(1, customerId);
 
 
-            try(ResultSet rs = ps.executeQuery()) {
+
+            try(ResultSet rs =
+                    ps.executeQuery()) {
 
 
                 if(rs.next()) {
@@ -205,7 +321,8 @@ public class CustomerDAOImpl implements CustomerDAO {
             }
 
 
-        } catch(SQLException e) {
+        }
+        catch(SQLException e) {
 
             e.printStackTrace();
 
@@ -220,38 +337,49 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 
 
-    // Get All Customers
+    // GET ALL CUSTOMERS
+
     @Override
     public List<Customer> getAllCustomers() {
 
 
-        List<Customer> list = new ArrayList<>();
+        List<Customer> customers =
+                new ArrayList<>();
 
 
-        String sql = "SELECT * FROM customer ORDER BY customer_id DESC";
+
+        String sql =
+        "SELECT * FROM customer ORDER BY customer_id DESC";
 
 
-        try(PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery()) {
+
+        try(PreparedStatement ps =
+                con.prepareStatement(sql);
+
+            ResultSet rs =
+                ps.executeQuery()) {
+
 
 
             while(rs.next()) {
 
 
-                list.add(mapResultSetToCustomer(rs));
-
+                customers.add(
+                        mapResultSetToCustomer(rs));
 
             }
 
 
-        } catch(SQLException e) {
+        }
+        catch(SQLException e) {
 
             e.printStackTrace();
 
         }
 
 
-        return list;
+
+        return customers;
 
     }
 
@@ -259,41 +387,64 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 
 
-    // ResultSet to Customer Object
-    private Customer mapResultSetToCustomer(ResultSet rs) throws SQLException {
+    // TOTAL CUSTOMER COUNT
+
+    public int getTotalCustomers() {
 
 
-        Customer customer = new Customer();
+        int count = 0;
 
 
+        String sql =
+        "SELECT COUNT(*) FROM customer";
+
+
+
+        try(PreparedStatement ps =
+                con.prepareStatement(sql);
+
+            ResultSet rs =
+                ps.executeQuery()) {
+
+
+
+            if(rs.next()) {
+
+                count = rs.getInt(1);
+
+            }
+
+
+        }
+        catch(Exception e) {
+
+            e.printStackTrace();
+
+        }
+        return count;
+    }
+    // RESULTSET TO CUSTOMER OBJECT
+
+    private Customer mapResultSetToCustomer(ResultSet rs)
+            throws SQLException {
+        Customer customer =
+                new Customer();
         customer.setCustomerId(
-            rs.getInt("customer_id")
-        );
-
-
+                rs.getInt("customer_id"));
         customer.setName(
-            rs.getString("name")
-        );
-
-
+                rs.getString("name"));
         customer.setEmail(
-            rs.getString("email")
-        );
-
-
+                rs.getString("email"));
         customer.setPhone(
-            rs.getString("phone")
-        );
-
-
+                rs.getString("phone"));
         customer.setAddress(
-            rs.getString("address")
-        );
-
-
+                rs.getString("address"));
         customer.setPassword(
-            rs.getString("password")
-        );
+                rs.getString("password"));
+        customer.setRole(
+                rs.getString("role"));
+        customer.setStatus(
+                rs.getString("status"));
         return customer;
 
     }

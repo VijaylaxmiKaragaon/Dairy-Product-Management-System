@@ -1,115 +1,259 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ page import="com.dairyproduct.dto.Admin"%>
+pageEncoding="UTF-8"%>
+
+<%@ page import="com.dairyproduct.dto.Customer" %>
 
 <%
-Admin admin = (Admin) session.getAttribute("admin");
+Customer admin =
+(Customer)session.getAttribute("customer");
 
-if (admin == null) {
-	response.sendRedirect("../adminLogin.jsp");
-	return;
+if(admin == null || !"ADMIN".equals(admin.getRole())){
+response.sendRedirect("login.jsp");
+return;
 }
 %>
 
 <!DOCTYPE html>
+
 <html>
 <head>
+
 <meta charset="UTF-8">
 <title>Admin Dashboard</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+rel="stylesheet">
 
 <style>
+
 body{
-	background:#f8f9fa;
+    background:#f4f6f9;
+    font-family:'Segoe UI',sans-serif;
 }
 
-.header{
-	background:#198754;
-	color:white;
-	padding:15px 30px;
-	display:flex;
-	justify-content:space-between;
-	align-items:center;
+.navbar{
+    background:#1565C0;
 }
 
-.card{
-	border-radius:10px;
-	transition:.3s;
+.sidebar{
+    background:#0D47A1;
+    min-height:100vh;
+    color:white;
 }
 
-.card:hover{
-	transform:translateY(-5px);
-	box-shadow:0 4px 10px rgba(0,0,0,.2);
+.sidebar a{
+    color:white;
+    text-decoration:none;
+    display:block;
+    padding:15px;
+    border-bottom:1px solid rgba(255,255,255,.2);
 }
+
+.sidebar a:hover{
+    background:#1976D2;
+}
+
+.card-box{
+    border:none;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.stat{
+    font-size:35px;
+    font-weight:bold;
+}
+
 </style>
 
 </head>
+
 <body>
 
-<div class="header">
-	<h3>Dairy Product Management</h3>
+<nav class="navbar navbar-dark">
 
-	<div>
-		<b><%= admin.getName() %></b> |
-		<%= admin.getRole() %>
+<div class="container-fluid">
 
-		<a href="../adminLogout" class="btn btn-light btn-sm ms-3">
-			Logout
-		</a>
-	</div>
+<span class="navbar-brand fw-bold">
+🥛 DairyMart Admin Panel
+</span>
+
+<a href="logout"
+class="btn btn-danger">
+Logout </a>
+
 </div>
 
-<div class="container mt-5">
+</nav>
 
-	<div class="row g-4">
+<div class="container-fluid">
 
-		<div class="col-md-4">
-			<div class="card p-4 text-center">
-				<h4>📂 Category</h4>
-				<a href="../viewCategory" class="btn btn-success mt-3">
-					Manage
-				</a>
-			</div>
-		</div>
+<div class="row">
 
-		<div class="col-md-4">
-			<div class="card p-4 text-center">
-				<h4>🥛 Products</h4>
-				<a href="../viewProducts" class="btn btn-primary mt-3">
-					Manage
-				</a>
-			</div>
-		</div>
+<!-- Sidebar -->
 
-		<div class="col-md-4">
-			<div class="card p-4 text-center">
-				<h4>📦 Stock</h4>
-				<a href="../viewStock" class="btn btn-warning mt-3">
-					Manage
-				</a>
-			</div>
-		</div>
+<div class="col-md-2 sidebar p-0">
 
-		<div class="col-md-4">
-			<div class="card p-4 text-center">
-				<h4>🛒 Orders</h4>
-				<a href="../viewOrders" class="btn btn-info mt-3">
-					View
-				</a>
-			</div>
-		</div>
+<h4 class="text-center py-3">
+Admin Menu
+</h4>
 
-		<div class="col-md-4">
-			<div class="card p-4 text-center">
-				<h4>💳 Payments</h4>
-				<a href="../viewPayment" class="btn btn-danger mt-3">
-					View
-				</a>
-			</div>
-		</div>
+<a href="adminProducts">
+🛒 Manage Products
+</a>
 
-	</div>
+<a href="viewCustomers">
+👥 Manage Customers
+</a>
+
+<a href="viewOrders">
+📦 Manage Orders
+</a>
+
+<a href="stockManagement">
+📊 Stock Management
+</a>
+
+<a href="lowStockProducts">
+⚠ Low Stock Products
+</a>
+
+</div>
+
+<!-- Content -->
+
+<div class="col-md-10 p-4">
+
+<h2>
+Welcome Admin,
+<%=admin.getName()%>
+</h2>
+
+<hr>
+
+<div class="row">
+
+<div class="col-md-3">
+
+<div class="card card-box bg-primary text-white">
+
+<div class="card-body text-center">
+
+<h5>Total Products</h5>
+
+<div class="stat">
+${totalProducts}
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card card-box bg-success text-white">
+
+<div class="card-body text-center">
+
+<h5>Total Customers</h5>
+
+<div class="stat">
+${totalCustomers}
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card card-box bg-warning text-dark">
+
+<div class="card-body text-center">
+
+<h5>Total Orders</h5>
+
+<div class="stat">
+${totalOrders}
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card card-box bg-danger text-white">
+
+<div class="card-body text-center">
+
+<h5>Low Stock</h5>
+
+<div class="stat">
+${lowStockCount}
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="card card-box">
+
+<div class="card-header bg-dark text-white">
+
+Quick Actions
+
+</div>
+
+<div class="card-body">
+
+<a href="addProduct.jsp"
+class="btn btn-success">
+
+➕ Add Product
+
+</a>
+
+<a href="adminProducts"
+class="btn btn-primary">
+
+🛒 View Products
+
+</a>
+
+<a href="viewOrders"
+class="btn btn-warning">
+
+📦 Orders
+
+</a>
+
+<a href="stockManagement"
+class="btn btn-info">
+
+📊 Stock
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 </div>
 

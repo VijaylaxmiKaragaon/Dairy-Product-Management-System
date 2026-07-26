@@ -118,7 +118,7 @@ body{
 
                 <div class="card-body">
 
-                    <form action="register" method="post">
+                    <form action="<%=request.getContextPath()%>/register" method="post">
 
                         <div class="mb-3">
 

@@ -1,5 +1,7 @@
 package com.dairyproduct.dto;
 
+import java.sql.Date;
+
 public class Product {
 
     private int productId;
@@ -8,8 +10,8 @@ public class Product {
     private String brand;
     private double price;
     private int quantity;
-    private String manufacturedDate;
-    private String expiryDate;
+    private Date manufacturedDate;
+    private Date expiryDate;
     private String description;
     private String image;
 
@@ -63,16 +65,16 @@ public class Product {
 	}
 
 
-	public void setManufacturedDate(String manufacturedDate) {
-		this.manufacturedDate = manufacturedDate;
+	public void setManufacturedDate(Date date) {
+		this.manufacturedDate = date;
 	}
 
-	public String getExpiryDate() {
+	public Date getExpiryDate() {
 		return expiryDate;
 	}
 
-	public void setExpiryDate(String expiryDate) {
-		this.expiryDate = expiryDate;
+	public void setExpiryDate(Date date) {
+		this.expiryDate = date;
 	}
 
 	public String getDescription() {
@@ -91,7 +93,7 @@ public class Product {
 		this.image = image;
 	}
 
-	public String getManufacturedDate() {
+	public Date getManufacturedDate() {
 		// TODO Auto-generated method stub
 		return null;
 	}

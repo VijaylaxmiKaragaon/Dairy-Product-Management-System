@@ -18,4 +18,10 @@ public interface OrdersDAO {
 
     List<Orders> getAllOrders();
 
+	double getTotalRevenue();
+
+	void updateOrderStatus(int orderId, String status);
+
+	void cancelOrder(int orderId);
+
 }

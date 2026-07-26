@@ -30,11 +30,20 @@ public class CustomerRegisterServlet extends HttpServlet {
         CustomerDAO dao = new CustomerDAOImpl();
 
         if (dao.registerCustomer(customer)) {
-            resp.sendRedirect("login.jsp");
-        } else {
+
+            System.out.println("Registration Success");
+
+            resp.sendRedirect(req.getContextPath()+"/login.jsp");
+
+        }
+        else {
+
+            System.out.println("Registration Failed");
+
             req.setAttribute("error", "Registration Failed");
+
             req.getRequestDispatcher("register.jsp")
-                    .forward(req, resp);
+               .forward(req, resp);
         }
     }
 }

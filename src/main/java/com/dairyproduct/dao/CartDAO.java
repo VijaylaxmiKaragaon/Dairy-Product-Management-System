@@ -10,4 +10,6 @@ public interface CartDAO {
 
     boolean deleteCart(int cartId);
 
+	boolean addToCart(Cart cart);
+
 }

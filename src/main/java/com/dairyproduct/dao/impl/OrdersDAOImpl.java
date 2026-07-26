@@ -151,5 +151,102 @@ public class OrdersDAOImpl implements OrdersDAO {
         return list;
 
 	}
+	
+	public int getTotalOrders() {
 
+	    int count = 0;
+
+	    String sql =
+	            "SELECT COUNT(*) FROM orders";
+
+	    try {
+
+	        PreparedStatement ps =
+	                con.prepareStatement(sql);
+
+	        ResultSet rs =
+	                ps.executeQuery();
+
+	        if(rs.next()) {
+	            count = rs.getInt(1);
+	        }
+
+	    } catch(Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return count;
+	}
+	
+	@Override
+	public void updateOrderStatus(
+	        int orderId,
+	        String status) {
+
+	    String sql =
+	            "UPDATE orders SET order_status=? WHERE order_id=?";
+
+	    try {
+
+	        PreparedStatement ps =
+	                con.prepareStatement(sql);
+
+	        ps.setString(1, status);
+
+	        ps.setInt(2, orderId);
+
+	        ps.executeUpdate();
+
+	    } catch(Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public double getTotalRevenue() {
+
+	    double revenue = 0;
+
+	    String sql =
+	            "SELECT IFNULL(SUM(total_amount),0) AS revenue FROM orders";
+
+	    try {
+
+	        PreparedStatement ps =
+	                con.prepareStatement(sql);
+
+	        ResultSet rs =
+	                ps.executeQuery();
+
+	        if(rs.next()) {
+
+	            revenue =
+	                    rs.getDouble("revenue");
+	        }
+
+	    } catch(Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return revenue;
+	}
+	
+	@Override
+	public void cancelOrder(int orderId) {
+
+	    String sql =
+	            "UPDATE orders SET order_status='Cancelled' WHERE order_id=?";
+
+	    try {
+
+	        PreparedStatement ps =
+	                con.prepareStatement(sql);
+
+	        ps.setInt(1, orderId);
+
+	        ps.executeUpdate();
+
+	    } catch(Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 }

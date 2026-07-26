@@ -20,7 +20,7 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public boolean addProduct(Product product) {
 
-        String sql = "INSERT INTO product(category_id, product_name, brand, price, quantity, manufacture_date, expiry_date, description, image) VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO product(category_id,product_name,brand,price,quantity,manufactured_date,expiry_date,description,image) VALUES(?,?,?,?,?,?,?,?,?)";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -29,8 +29,8 @@ public class ProductDAOImpl implements ProductDAO {
             ps.setString(3, product.getBrand());
             ps.setDouble(4, product.getPrice());
             ps.setInt(5, product.getQuantity());
-            ps.setString(6, product.getManufacturedDate());
-            ps.setString(7, product.getExpiryDate());
+            ps.setDate(6, product.getManufacturedDate());
+            ps.setDate(7, product.getExpiryDate());
             ps.setString(8, product.getDescription());
             ps.setString(9, product.getImage());
 
@@ -45,34 +45,73 @@ public class ProductDAOImpl implements ProductDAO {
 
 
 
-    // Update Product
+ // Update Product
     @Override
     public boolean updateProduct(Product product) {
 
-        String sql = "UPDATE product SET category_id=?, product_name=?, brand=?, price=?, quantity=?, manufacture_date=?, expiry_date=?, description=?, image=? WHERE product_id=?";
 
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
+        String sql =
+        "UPDATE product SET category_id=?, product_name=?, brand=?, price=?, quantity=?, manufactured_date=?, expiry_date=?, description=?, image=? WHERE product_id=?";
 
-            ps.setInt(1, product.getCategoryId());
-            ps.setString(2, product.getProductName());
-            ps.setString(3, product.getBrand());
-            ps.setDouble(4, product.getPrice());
-            ps.setInt(5, product.getQuantity());
-            ps.setString(6, product.getManufacturedDate());
-            ps.setString(7, product.getExpiryDate());
-            ps.setString(8, product.getDescription());
-            ps.setString(9, product.getImage());
-            ps.setInt(10, product.getProductId());
+
+        try (PreparedStatement ps =
+                con.prepareStatement(sql)) {
+
+
+            ps.setInt(1,
+                    product.getCategoryId());
+
+
+            ps.setString(2,
+                    product.getProductName());
+
+
+            ps.setString(3,
+                    product.getBrand());
+
+
+            ps.setDouble(4,
+                    product.getPrice());
+
+
+            ps.setInt(5,
+                    product.getQuantity());
+
+
+            ps.setDate(6,
+                    product.getManufacturedDate());
+
+
+            ps.setDate(7,
+                    product.getExpiryDate());
+
+
+            ps.setString(8,
+                    product.getDescription());
+
+
+            ps.setString(9,
+                    product.getImage());
+
+
+            ps.setInt(10,
+                    product.getProductId());
+
+
 
             return ps.executeUpdate() > 0;
 
+
+
         } catch (SQLException e) {
+
             e.printStackTrace();
+
         }
+
 
         return false;
     }
-
 
 
     // Delete Product
@@ -191,46 +230,73 @@ public class ProductDAOImpl implements ProductDAO {
 
 
 
-    // Search Product
     @Override
     public List<Product> searchProduct(String keyword) {
 
+        List<Product> products =
+                new ArrayList<>();
 
-        List<Product> products = new ArrayList<>();
+        String sql =
+                "SELECT * FROM product WHERE product_name LIKE ? OR brand LIKE ?";
 
+        try {
 
-        String sql = "SELECT * FROM product WHERE product_name LIKE ? OR brand LIKE ?";
+            PreparedStatement ps =
+                    con.prepareStatement(sql);
 
+            ps.setString(1,
+                    "%" + keyword + "%");
 
-        try(PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(2,
+                    "%" + keyword + "%");
 
+            ResultSet rs =
+                    ps.executeQuery();
 
-            ps.setString(1, "%" + keyword + "%");
-            ps.setString(2, "%" + keyword + "%");
+            while(rs.next()) {
 
+                Product product =
+                        new Product();
 
-            try(ResultSet rs = ps.executeQuery()) {
+                product.setProductId(
+                        rs.getInt("product_id"));
 
+                product.setCategoryId(
+                        rs.getInt("category_id"));
 
-                while(rs.next()) {
+                product.setProductName(
+                        rs.getString("product_name"));
 
-                    products.add(mapResultSetToProduct(rs));
+                product.setBrand(
+                        rs.getString("brand"));
 
-                }
+                product.setPrice(
+                        rs.getDouble("price"));
 
+                product.setQuantity(
+                        rs.getInt("quantity"));
+
+                product.setManufacturedDate(
+                        rs.getDate("manufactured_date"));
+
+                product.setExpiryDate(
+                        rs.getDate("expiry_date"));
+
+                product.setDescription(
+                        rs.getString("description"));
+
+                product.setImage(
+                        rs.getString("image"));
+
+                products.add(product);
             }
 
-
-        } catch(SQLException e) {
-
+        } catch(Exception e) {
             e.printStackTrace();
-
         }
-
 
         return products;
     }
-
 
 
 
@@ -254,9 +320,9 @@ public class ProductDAOImpl implements ProductDAO {
 
         p.setQuantity(rs.getInt("quantity"));
 
-        p.setManufacturedDate(rs.getString("manufactured_date"));
+        p.setManufacturedDate(rs.getDate("manufactured_date"));
 
-        p.setExpiryDate(rs.getString("expiry_date"));
+        p.setExpiryDate(rs.getDate("expiry_date"));
 
         p.setDescription(rs.getString("description"));
 
@@ -265,6 +331,81 @@ public class ProductDAOImpl implements ProductDAO {
 
         return p;
 
+    }
+    
+    @Override
+    public List<Product> getLowStockProducts() {
+
+        List<Product> products =
+                new ArrayList<>();
+
+        String sql =
+                "SELECT * FROM product WHERE quantity < 10";
+
+        try {
+
+            PreparedStatement ps =
+                    con.prepareStatement(sql);
+
+            ResultSet rs =
+                    ps.executeQuery();
+
+            while(rs.next()) {
+
+                Product p = new Product();
+
+                p.setProductId(
+                        rs.getInt("product_id"));
+
+                p.setCategoryId(
+                        rs.getInt("category_id"));
+
+                p.setProductName(
+                        rs.getString("product_name"));
+
+                p.setBrand(
+                        rs.getString("brand"));
+
+                p.setPrice(
+                        rs.getDouble("price"));
+
+                p.setQuantity(
+                        rs.getInt("quantity"));
+
+                products.add(p);
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return products;
+    }
+    
+    public int getTotalProducts() {
+
+        int count = 0;
+
+        String sql =
+                "SELECT COUNT(*) FROM product";
+
+        try {
+
+            PreparedStatement ps =
+                    con.prepareStatement(sql);
+
+            ResultSet rs =
+                    ps.executeQuery();
+
+            if(rs.next()) {
+                count = rs.getInt(1);
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return count;
     }
 
 }

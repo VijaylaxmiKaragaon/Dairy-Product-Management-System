@@ -12,19 +12,21 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/cancelOrder")
-public class CancelOrderServlet extends HttpServlet{
+public class CancelOrderServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest req,
-            HttpServletResponse resp)
-            throws ServletException, IOException {
+                         HttpServletResponse resp)
+            throws IOException {
 
         int orderId =
-                Integer.parseInt(req.getParameter("orderId"));
+                Integer.parseInt(
+                        req.getParameter("orderId"));
 
-        OrdersDAO dao = new OrdersDAOImpl();
+        OrdersDAO dao =
+                new OrdersDAOImpl();
 
-        dao.deleteOrder(orderId);
+        dao.cancelOrder(orderId);
 
-        resp.sendRedirect("viewOrders");
+        resp.sendRedirect("myOrders");
     }
 }

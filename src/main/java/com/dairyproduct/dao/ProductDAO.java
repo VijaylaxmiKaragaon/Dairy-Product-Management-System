@@ -19,4 +19,6 @@ public interface ProductDAO {
 
     List<Product> searchProduct(String keyword);
 
+	List<Product> getLowStockProducts();
+
 }
